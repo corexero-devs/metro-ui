@@ -80,9 +80,7 @@ fun RouteScreen(
         }
 
         MetroRouteSubInfo(
-            time = routeResultUi.interchange.last().let {
-                it.inBetweenStations.lastOrNull() ?: it.destinationStation
-            }.time,
+            time = routeResultUi.interchange.last().destinationStation.time,
             fare = routeResultUi.fare,
             stations = routeResultUi.stations,
             interchanges = routeResultUi.interchanges,
