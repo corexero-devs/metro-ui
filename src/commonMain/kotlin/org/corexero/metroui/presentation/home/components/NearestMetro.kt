@@ -30,7 +30,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import jaipurmetro.metroui.generated.resources.Res
 import jaipurmetro.metroui.generated.resources.allow_access_to_your_location
-import jaipurmetro.metroui.generated.resources.allow_location_access
+import jaipurmetro.metroui.generated.resources.allow_location_access_in_android
+import jaipurmetro.metroui.generated.resources.allow_location_access_in_ios
 import jaipurmetro.metroui.generated.resources.find_nearby_stations
 import jaipurmetro.metroui.generated.resources.finding_stations
 import jaipurmetro.metroui.generated.resources.nearest_metro_location
@@ -47,6 +48,8 @@ import org.corexero.metroui.ui.theme.subHeadingTitle
 import org.corexero.metroui.utils.hexToColor
 import org.corexero.metroui.presentation.common.components.MetroDialog
 import org.corexero.metroui.presentation.common.components.rememberLocationPermission
+import org.corexero.metroui.presentation.utils.Platform
+import org.corexero.metroui.presentation.utils.getPlatform
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
 
@@ -171,7 +174,10 @@ private fun NearestMetroRationale(
             shape = RoundedCornerShape(8.dp)
         ) {
             Text(
-                text = stringResource(Res.string.allow_location_access),
+                text = when (getPlatform()) {
+                    Platform.Android -> stringResource(Res.string.allow_location_access_in_android)
+                    Platform.Ios -> stringResource(Res.string.allow_location_access_in_ios)
+                },
                 style = MaterialTheme.typography.h5.copy(
                     fontFamily = interFont,
                     fontSize = 14.sp,
