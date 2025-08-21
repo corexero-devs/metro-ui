@@ -52,4 +52,5 @@
     <string name="daily_services">Daily Services</string>
     <string name="check_another_route">Check Another Route</string>
     <string name="train_timings_disclaimer">Metro timings may vary on weekends and holidays.</string>
+    <string name="unable_to_open_whatsapp">Unable to open WhatsApp. Please try again later.</string>
 </resources>

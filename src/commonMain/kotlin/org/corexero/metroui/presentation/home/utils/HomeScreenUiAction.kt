@@ -42,4 +42,8 @@ sealed interface HomeScreenUiAction {
 
     data object OnDismissLastMetroTiming : HomeScreenUiAction
 
+    data class ShowError(
+        val message: String
+    ) : HomeScreenUiAction
+
 }

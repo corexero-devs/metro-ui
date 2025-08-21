@@ -16,6 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
+import jaipurmetro.metroui.generated.resources.Res
+import jaipurmetro.metroui.generated.resources.unable_to_open_whatsapp
 import org.corexero.metroui.presentation.common.components.StatusBarColor
 import org.corexero.metroui.presentation.home.components.Disclaimer
 import org.corexero.metroui.presentation.home.components.HomeScreenHeader
@@ -28,6 +30,7 @@ import org.corexero.metroui.presentation.home.utils.HomeScreenState
 import org.corexero.jaipurmetro.presentation.home.utils.HomeScreenUiAction
 import org.corexero.metroui.ui.components.SnackBar
 import org.corexero.metroui.ui.theme.backgroundColor
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun HomeScreen(
@@ -83,6 +86,10 @@ fun HomeScreen(
 
         val uriHandler = LocalUriHandler.current
 
+        val errorMessage = stringResource(
+            Res.string.unable_to_open_whatsapp
+        )
+
         QuickAccess(
             modifier = Modifier
                 .fillMaxWidth()
@@ -94,8 +101,14 @@ fun HomeScreen(
                 }
 
                 QuickAccess.BOOK_TICKET -> {
-                    uriHandler.openUri("https://wa.me/+919650855800?text=Hi")
-                    onAction(HomeScreenUiAction.ShareOnWhatsApp)
+                    try {
+                        uriHandler.openUri("https://wa.me/+919650855800?text=Hi")
+                        onAction(HomeScreenUiAction.ShareOnWhatsApp)
+                    } catch (_: Exception) {
+                        onAction(
+                            HomeScreenUiAction.ShowError(errorMessage)
+                        )
+                    }
                 }
 
                 QuickAccess.NearestMetro -> {
