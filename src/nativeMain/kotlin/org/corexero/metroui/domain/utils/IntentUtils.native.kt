@@ -10,6 +10,7 @@ import platform.CoreGraphics.CGImageAlphaInfo
 import platform.UIKit.UIActivityViewController
 import platform.UIKit.UIImage
 import platform.UIKit.UIViewController
+import platform.UIKit.popoverPresentationController
 
 actual class IntentUtils(
     private val uiViewController: UIViewController
@@ -21,6 +22,7 @@ actual class IntentUtils(
                 activityItems = listOf(uiImage),
                 applicationActivities = null
             )
+            activityVC.popoverPresentationController?.sourceView = uiViewController.view
             uiViewController.presentViewController(
                 activityVC,
                 true,
