@@ -42,11 +42,7 @@ actual class IntentUtils(
                 pop.permittedArrowDirections = UIPopoverArrowDirectionAny
             }
             val presentBlock = {
-                uiViewController.presentViewController(
-                    presenter,
-                    true,
-                    null
-                )
+                presenter.presentViewController(activityVC, true, null)
             }
             if (NSThread.isMainThread()) presentBlock() else dispatch_async(
                 dispatch_get_main_queue(),

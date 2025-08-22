@@ -287,6 +287,10 @@ class HomeViewModel(
                     }
                 }
             }
+
+            is HomeScreenUiAction.ShowError -> {
+                showErrorMessage(action.message)
+            }
         }
     }
 
