@@ -31,22 +31,24 @@ import androidx.compose.ui.unit.sp
 import jaipurmetro.metroui.generated.resources.Res
 import jaipurmetro.metroui.generated.resources.allow_access_to_your_location
 import jaipurmetro.metroui.generated.resources.allow_location_access
+import jaipurmetro.metroui.generated.resources.allow_location_access_ios
 import jaipurmetro.metroui.generated.resources.find_nearby_stations
 import jaipurmetro.metroui.generated.resources.finding_stations
 import jaipurmetro.metroui.generated.resources.nearest_metro_location
 import jaipurmetro.metroui.generated.resources.nearest_metro_stations
 import jaipurmetro.metroui.generated.resources.searching_for_metro_stations
 import jaipurmetro.metroui.generated.resources.time_to_nearest_metro
-import org.corexero.metroui.presentation.home.utils.HomeScreenState
 import org.corexero.jaipurmetro.presentation.home.utils.HomeScreenUiAction
 import org.corexero.metroui.domain.model.NearestMetroStationUi
+import org.corexero.metroui.presentation.common.components.MetroDialog
+import org.corexero.metroui.presentation.common.components.rememberLocationPermission
+import org.corexero.metroui.presentation.home.utils.HomeScreenState
 import org.corexero.metroui.ui.theme.backgroundColor
 import org.corexero.metroui.ui.theme.greyishColor
 import org.corexero.metroui.ui.theme.interFont
 import org.corexero.metroui.ui.theme.subHeadingTitle
 import org.corexero.metroui.utils.hexToColor
-import org.corexero.metroui.presentation.common.components.MetroDialog
-import org.corexero.metroui.presentation.common.components.rememberLocationPermission
+import org.corexero.metroui.utils.platformName
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
 
@@ -170,8 +172,10 @@ private fun NearestMetroRationale(
                 .padding(horizontal = 16.dp),
             shape = RoundedCornerShape(8.dp)
         ) {
+            val isIos = (platformName == "iOS" || platformName == "macOS")
             Text(
-                text = stringResource(Res.string.allow_location_access),
+                text = if (isIos) stringResource(Res.string.allow_location_access_ios)
+                else stringResource(Res.string.allow_location_access),
                 style = MaterialTheme.typography.h5.copy(
                     fontFamily = interFont,
                     fontSize = 14.sp,

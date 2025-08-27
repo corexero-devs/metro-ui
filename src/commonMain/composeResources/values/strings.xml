@@ -41,6 +41,7 @@
     <string name="find_nearby_stations">Find Nearby Stations</string>
     <string name="allow_access_to_your_location">Allow access to your location to see the nearest metro stations to you</string>
     <string name="allow_location_access">Allow Location Access</string>
+    <string name="allow_location_access_ios">Continue</string>
     <string name="finding_stations">Finding Stations</string>
     <string name="searching_for_metro_stations">Searching for metro stations near you...</string>
     <string name="last_train_timings">Last Train Timings</string>
