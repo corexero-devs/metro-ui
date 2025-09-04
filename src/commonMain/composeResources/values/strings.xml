@@ -1,0 +1,108 @@
+<resources>
+
+    <!--    Station Selection Card Strings-->
+    <string name="plan_your_journey">Plan Your Journey</string>
+    <string name="from_station">From Station</string>
+    <string name="to_station">To Station</string>
+    <string name="find_route">Find Route</string>
+
+    <!--    // Quick Access Strings-->
+    <string name="quick_access">Quick Access</string>
+    <string name="map">Map</string>
+    <string name="book_ticket">Book Ticket</string>
+    <string name="nearest_metro">Nearest Metro</string>
+    <string name="timings">Timings</string>
+
+    <!--    // Recent Searches Strings-->
+    <string name="recent_searches">Recent Searches</string>
+    <string name="stations_count">%1$d stations</string>
+
+    <!--    // Nearest Metro Strings-->
+    <string name="nearest_metro_stations">Nearest Metro Stations</string>
+    <string name="find_nearby_stations">Find Nearby Stations</string>
+    <string name="allow_access_to_your_location">Allow access to your location to see the nearest metro stations to you</string>
+    <string name="allow_location_access_in_android">Allow Location Access</string>
+    <string name="allow_location_access_in_ios">Continue</string>
+    <string name="finding_stations">Finding Stations</string>
+    <string name="searching_for_metro_stations">Searching for metro stations near you...</string>
+
+    <!--    // Metro Disclaimer Strings-->
+    <string name="disclaimer">Disclaimer:</string>
+    <string name="disclaimer_content">Metro Yatri is an unofficial guide app. All information is provided for convenience and may not reflect real-time changes. This app works offline.</string>
+    <string name="love">Made with love❤️ in india️</string>
+
+    <!--    // Metro Timings Strings-->
+    <string name="last_train_timings">Last Train Timings</string>
+    <string name="check_last_train">Check Last Train</string>
+    <string name="checking_timings">Checking Timings</string>
+    <string name="finding_metro_schedule">Finding metro schedule information..</string>
+    <string name="first_metro">First Metro</string>
+    <string name="last_metro">Last Metro</string>
+    <string name="daily_services">Daily Services</string>
+    <string name="check_another_route">Check Another Route</string>
+    <string name="train_timings_disclaimer">Metro timings may vary on weekends and holidays.</string>
+
+    <!--    // Metro App Update Strings-->
+    <string name="upd_title">Update required</string>
+    <string name="upd_sub">Your version is out of date. Please update to continue.</string>
+    <string name="upd_note">This is a critical update that includes security and stability improvements.</string>
+    <string name="upd_primary_hard">Update and restart</string>
+    <string name="upd_primary_soft">Update now</string>
+    <string name="upd_secondary_soft">Later</string>
+    <string name="upd_block_hint">You won't be able to use the app until you update.</string>
+
+    <!--    // Route Details Strings-->
+    <string name="metro_route">Metro Route</string>
+    <string name="fare">Fare</string>
+    <string name="runtime">Runtime</string>
+    <string name="stations">Stations</string>
+    <string name="interchanges">Interchanges</string>
+    <string name="to">To</string>
+
+    <!--   // Route Location Steps Strings-->
+    <string name="live_location">Live location</string>
+    <string name="status_on">On</string>
+    <string name="status_off">Off</string>
+    <string name="live_location_hint">Set when inside the metro to start live tracking.</string>
+    <string name="live_location_toggle_cd">Toggle live location</string>
+    <string name="live_metro">Live Metro</string>
+    <string name="live_metro_location">Live Metro Location</string>
+    <string name="allow_access_to_your_location_metro">Allow access to your location to see the live metro location to you</string>
+    <string name="allow_access_to_your_location_metro_access">Enable your access location to see the live metro location</string>
+    <string name="enable_location">Enable Location Access</string>
+
+    <string name="change_here">Change here for %1$s</string>
+    <string name="towards">Towards</string>
+    <string name="show_all_station">Show All Stations</string>
+    <string name="hide_all_station">Hide All Stations</string>
+    <string name="platform_no">Platform No. %1$d</string>
+
+
+    <!-- FeedBack form-->
+    <string name="share_feedback_title">Share Feedback</string>
+    <string name="share_feedback_subtitle">Help us improve your experience</string>
+    <string name="share_feedback_description">Rate your experience and suggest improvements</string>
+
+    <string name="feedback_title">Share Your Feedback</string>
+    <string name="feedback_rate_q">How would you rate your experience?</string>
+    <string name="feedback_rate_hint">Tap a star to rate</string>
+    <string name="feedback_topic_q">What would you like to share feedback about?</string>
+    <string name="feedback_more_q">Tell us more</string>
+    <string name="feedback_email_q">Email</string>
+
+
+    <string name="feedback_cat_design">App Design</string>
+    <string name="feedback_cat_features">Features</string>
+    <string name="feedback_cat_perf">Performance</string>
+    <string name="feedback_cat_other">Other</string>
+
+
+    <string name="feedback_more_hint">Share your thoughts, suggestions, or report any issues...</string>
+    <string name="feedback_email_hint">your@email.com</string>
+
+    <string name="feedback_btn_cancel">Cancel</string>
+    <string name="feedback_btn_submit">Submit Feedback</string>
+    <string name="feedback_subtitle">Help us make Metro App better for everyone</string>
+    <string name="feedback_more_helper">Your feedback helps us improve the app for everyone</string>
+    <string name="feedback_email_helper">We&apos;ll only contact you if we need more details</string>
+</resources>
