@@ -296,7 +296,7 @@ class HomeViewModel(
     private fun handleSelectNearestMetroStation(action: HomeScreenUiAction.OnSelectNearestMetroStationUi) {
         if (!::allStationList.isInitialized) return
 
-        val station = findStationById(action.metroStationUi.stationId.toInt())
+        val station = findStationById(action.metroStationUi.stationId)
         station?.let { selectedStation ->
             _homeScreenState.update { currentState ->
                 currentState.copy(
@@ -425,7 +425,7 @@ class HomeViewModel(
     }
 
     // Helper methods for station operations
-    private fun findStationById(stationId: Int): StationUi? {
+    private fun findStationById(stationId: Long): StationUi? {
         return if (::allStationList.isInitialized) {
             allStationList.find { it.id == stationId }
         } else null
@@ -501,7 +501,7 @@ class HomeViewModel(
         }
     }
 
-    private fun loadAndDisplayNearestStations(latitude: Double, longitude: Double) {
+    private suspend fun loadAndDisplayNearestStations(latitude: Double, longitude: Double) {
         val nearestMetroStations = stationRepository.getNearestMetroStations(
             locationUi = LocationUi(
                 lat = latitude,
@@ -567,7 +567,7 @@ class HomeViewModel(
         }
     }
 
-    private fun fetchAndDisplayLastMetroTiming(stationSelect: HomeScreenState.LastMetroTimingState.StationSelect) {
+    private suspend fun fetchAndDisplayLastMetroTiming(stationSelect: HomeScreenState.LastMetroTimingState.StationSelect) {
         val source = stationSelect.source!!
         val destination = stationSelect.destination!!
 
@@ -602,7 +602,7 @@ class HomeViewModel(
     }
 
     // Validation and error handling
-    private fun validateRoute(sourceId: Int?, destinationId: Int?): Boolean {
+    private fun validateRoute(sourceId: Long?, destinationId: Long?): Boolean {
         if (sourceId == null || destinationId == null) {
             val errorMessage = when {
                 sourceId == null -> "Please select a proper Source station"

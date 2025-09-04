@@ -5,7 +5,7 @@ import com.codeancy.metroui.common.utils.UiText
 
 @Stable
 data class StationUi(
-    val id: Int,
+    val id: Long,
     val name: UiText.DynamicString,
     val icon: StationIcon,
     val description: UiText?,

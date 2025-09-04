@@ -6,13 +6,13 @@ import com.codeancy.metroui.domain.models.StationUi
 
 interface StationRepository {
 
-    fun getAllStations(): List<StationUi>
+    suspend fun getAllStations(): List<StationUi>
 
-    fun getNearestMetroStations(
+    suspend fun getNearestMetroStations(
         locationUi: LocationUi
     ): List<NearestMetroStationUi>
 
-    fun getFirstAndLastMetroTime(
+    suspend fun getFirstAndLastMetroTime(
         source: StationUi,
         destination: StationUi
     ): Pair<String, String>?

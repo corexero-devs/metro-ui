@@ -28,7 +28,7 @@ data class HomeScreenRoute(
         @Composable
         fun Invoke(
             homeScreenRoute: HomeScreenRoute,
-            onNavigateToRouteScreen: (Int, Int, Boolean) -> Unit,
+            onNavigateToRouteScreen: (Long, Long, Boolean) -> Unit,
             onNavigateToMapScreen: () -> Unit,
         ) {
             val homeViewModel: HomeViewModel = koinViewModel(
@@ -62,8 +62,8 @@ data class HomeScreenRoute(
 
 @Serializable
 data class RouteScreenRoute(
-    val sourceId: Int,
-    val destId: Int,
+    val sourceId: Long,
+    val destId: Long,
     val isRecent: Boolean = false
 ) {
     companion object {

@@ -26,8 +26,8 @@ class DeepLinkNavigator {
 sealed interface Screen {
     data object Home : Screen
     data class Route(
-        val sourceId: Int,
-        val destId: Int,
+        val sourceId: Long,
+        val destId: Long,
     ) : Screen
 
     data object Map : Screen

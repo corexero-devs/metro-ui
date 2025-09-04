@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.Flow
 interface RouteRepository {
 
     suspend fun getRoute(
-        sourceId: Int,
-        destinationId: Int
+        sourceId: Long,
+        destinationId: Long
     ): RouteResultUi
 
     suspend fun updatePlatForms(
@@ -17,6 +17,6 @@ interface RouteRepository {
 
     suspend fun getRecentSearches(): Flow<List<RecentRouteResult>>
 
-    suspend fun getRecentSearch(sourceId: Int, destinationId: Int): RecentRouteResult?
+    suspend fun getRecentSearch(sourceId: Long, destinationId: Long): RecentRouteResult?
 
 }

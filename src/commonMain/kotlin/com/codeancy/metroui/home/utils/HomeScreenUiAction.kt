@@ -14,8 +14,8 @@ sealed interface HomeScreenUiAction {
     data object GetRouteError : HomeScreenUiAction
 
     data class GetRoute(
-        val sourceId: Int,
-        val destId: Int,
+        val sourceId: Long,
+        val destId: Long,
         val isRecent: Boolean
     ) : HomeScreenUiAction
 
