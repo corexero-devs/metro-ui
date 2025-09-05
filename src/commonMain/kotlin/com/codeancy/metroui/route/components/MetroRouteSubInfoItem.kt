@@ -44,7 +44,7 @@ import org.jetbrains.compose.resources.vectorResource
 
 @Composable
 fun MetroRouteSubInfo(
-    time: Int,
+    time: Long,
     fare: Int,
     stations: Int,
     interchanges: Int,

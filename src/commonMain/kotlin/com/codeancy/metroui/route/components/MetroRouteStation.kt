@@ -39,6 +39,8 @@ import org.jetbrains.compose.resources.vectorResource
 @Composable
 fun MetroRouteStation(
     stationUi: StationUi,
+    icon: StationUi.StationIcon,
+    type: StationUi.StationType,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -48,7 +50,7 @@ fun MetroRouteStation(
 
         ) {
 
-        when (stationUi.icon) {
+        when (icon) {
             StationUi.StationIcon.In -> {
                 Column(
                     modifier = Modifier.fillMaxHeight(),
@@ -87,7 +89,7 @@ fun MetroRouteStation(
                             }
                     )
                     Spacer(modifier = Modifier.height(2.dp))
-                    if (stationUi.isEndStation) {
+                    if (type == StationUi.StationType.End) {
                         MetroEndIcon()
                     }
                 }
@@ -140,7 +142,7 @@ fun MetroRouteStation(
                 Text(
                     text = descriptionText,
                     style = MaterialTheme.typography.bodySmall.copy(
-                        color = if (stationUi.isInterchange) Color.Red else MaterialTheme.colorScheme.secondary,
+                        color = if (type == StationUi.StationType.Interchange) Color.Red else MaterialTheme.colorScheme.secondary,
                         fontSize = 12.sp,
                         fontWeight = FontWeight.SemiBold,
                     )
@@ -168,7 +170,7 @@ fun MetroRouteStation(
             )
         )
     }
-    if (!stationUi.isEndStation) {
+    if (type != StationUi.StationType.End) {
         MetroStopInBetween(
             color = stationUi.colorHex.hexToColor()
         )
