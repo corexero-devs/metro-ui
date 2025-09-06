@@ -272,7 +272,7 @@ private fun HideAndShowStationsButton(
 
 @Composable
 private fun PlatformNoAndTowardsStationInfo(
-    platformNo: Int?,
+    platformNo: String?,
     towardsStationName: String?,
     lineColor: Color,
     modifier: Modifier = Modifier

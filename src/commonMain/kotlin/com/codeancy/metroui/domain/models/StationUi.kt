@@ -12,7 +12,7 @@ data class StationUi(
     val time: Long,
     val colorHex: String,
     val lineName: String,
-    val platformNo: Int? = null,
+    val platformNo: String? = null,
     val towards: String? = null,
     val code: String? = null,
     val locationUi: LocationUi

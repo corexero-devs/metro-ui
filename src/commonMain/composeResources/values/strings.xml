@@ -75,7 +75,7 @@
     <string name="towards">Towards</string>
     <string name="show_all_station">Show All Stations</string>
     <string name="hide_all_station">Hide All Stations</string>
-    <string name="platform_no">Platform No. %1$d</string>
+    <string name="platform_no">Platform No. %1$s</string>
 
 
     <!-- FeedBack form-->
