@@ -19,7 +19,7 @@ import com.codeancy.metroui.domain.models.StationUi
 @Composable
 fun InterchangeLayout(
     allStations: List<StationUi>,
-    stations: List<StationUi>,
+    visibleStations: List<StationUi>,
     stationInfo: @Composable (StationUi, Int) -> Unit,
     indicator: @Composable (Int) -> Unit,
     indicatorBackground: @Composable () -> Unit,
@@ -58,7 +58,7 @@ fun InterchangeLayout(
         }
     }
 
-    val stationsCount = stations.size
+    val stationsCount = visibleStations.size
 
     ComponentCard(
         modifier = modifier,
@@ -67,10 +67,10 @@ fun InterchangeLayout(
         Layout(
             content = {
                 indicatorBackground()
-                stations.forEachIndexed { index, ui ->
+                visibleStations.forEachIndexed { index, ui ->
                     stationInfo(ui, index)
                 }
-                repeat(stations.size) {
+                repeat(visibleStations.size) {
                     indicator(it)
                 }
                 liveLocationStatusIndicator()
@@ -165,7 +165,7 @@ fun InterchangeLayout(
                 if (liveLocationUi != null) {
                     val liveLocationX =
                         indicatorBackgroundPlaceable.width / 2 - liveLocationPlaceable.width / 2
-                    if (stations.size == 2) {
+                    if (visibleStations.size == 2) {
                         val fromStationIndex =
                             allStations.indexOfFirst { it.id == liveLocationUi.startStation.entity }
                         if (fromStationIndex < 0 || fromStationIndex >= allStations.lastIndex) {
@@ -181,8 +181,8 @@ fun InterchangeLayout(
                         liveLocationPlaceable.placeRelative(liveLocationX, placement)
                     } else {
                         val fromStationIndex =
-                            stations.indexOfFirst { it.id == liveLocationUi.startStation.entity }
-                        if (fromStationIndex < 0 || fromStationIndex >= stations.lastIndex) {
+                            visibleStations.indexOfFirst { it.id == liveLocationUi.startStation.entity }
+                        if (fromStationIndex < 0 || fromStationIndex >= visibleStations.lastIndex) {
                             return@layout
                         }
                         val startY = fromStationIndex * spacing + (fromStationIndex - 1).let {

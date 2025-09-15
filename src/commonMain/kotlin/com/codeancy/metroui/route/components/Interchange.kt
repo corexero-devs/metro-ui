@@ -115,7 +115,7 @@ private fun InterchangeV2(
 
     InterchangeLayout(
         allStations = allStations,
-        stations = stations,
+        visibleStations = stations,
         spacingBetweenStations = 6.dp,
         stationInfo = { stationUi, index ->
             when (index) {
