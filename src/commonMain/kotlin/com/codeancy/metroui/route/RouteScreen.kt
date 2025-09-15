@@ -33,6 +33,13 @@ import com.codeancy.metroui.route.components.MetroRouteStations
 import com.codeancy.metroui.route.components.MetroRouteSubInfo
 import kotlinx.coroutines.launch
 import org.corexero.sutradhar.location.models.LocationProviderStatus
+import org.corexero.sutradhar.remoteConfig.ConfigKey
+import org.corexero.sutradhar.remoteConfig.FirebaseRemoteConfig
+
+private data object LiveLocationConfigKey : ConfigKey<Boolean>(
+    key = "LIVE_LOCATION",
+    defaultValue = false
+)
 
 @Composable
 fun RouteScreen(
@@ -107,7 +114,9 @@ fun RouteScreen(
                     .verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                if (state.isInterChangeFormatOpen) {
+                if (state.isInterChangeFormatOpen
+                    && FirebaseRemoteConfig.getBoolean(LiveLocationConfigKey)
+                ) {
                     LiveLocationSettingRow(
                         checked = state.isLiveLocationEnabled,
                         enabled = liveLocationUi !is LiveLocationUi.Initializing && liveLocationUi !is LiveLocationUi.NotInMetro,
