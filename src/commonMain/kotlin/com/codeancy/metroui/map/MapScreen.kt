@@ -1,6 +1,5 @@
 package com.codeancy.metroui.map
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.detectTransformGestures
 import androidx.compose.foundation.layout.Box
@@ -15,8 +14,8 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
+import com.codeancy.metroui.common.utils.MapDrawableResource
 import com.codeancy.metroui.common.utils.MetroConfig
-import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun MapScreen(
@@ -79,11 +78,19 @@ fun MapScreen(
                 translationY = offset.y
             }
     ) {
-        Image(
-            painter = painterResource(MetroConfig.mapDrawableResource),
+        MapImage(
+            mapDrawableResource = MetroConfig.mapDrawableResource,
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.FillWidth
         )
     }
 }
+
+@Composable
+expect fun MapImage(
+    modifier: Modifier,
+    mapDrawableResource: MapDrawableResource,
+    contentDescription: String?,
+    contentScale: ContentScale
+)
