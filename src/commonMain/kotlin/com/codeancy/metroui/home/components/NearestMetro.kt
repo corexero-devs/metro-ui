@@ -31,20 +31,23 @@ import androidx.compose.ui.unit.sp
 import com.codeancy.metroui.common.components.MetroDialog
 import com.codeancy.metroui.common.components.rememberLocationPermission
 import com.codeancy.metroui.common.utils.LastMetroTiming
+import com.codeancy.metroui.common.utils.MetroConfig
 import com.codeancy.metroui.common.utils.MetroUiColor
 import com.codeancy.metroui.common.utils.hexToColor
-import com.codeancy.metroui.common.utils.MetroConfig
+import com.codeancy.metroui.domain.models.NearestMetroStationUi
 import com.codeancy.metroui.home.utils.HomeScreenState
 import com.codeancy.metroui.home.utils.HomeScreenUiAction
-import com.codeancy.metroui.domain.models.NearestMetroStationUi
 import indianmetro.metroui.generated.resources.Res
-import indianmetro.metroui.generated.resources.allow_access_to_your_location
+import indianmetro.metroui.generated.resources.allow_location_access_in_android
+import indianmetro.metroui.generated.resources.allow_location_access_in_ios
 import indianmetro.metroui.generated.resources.find_nearby_stations
 import indianmetro.metroui.generated.resources.finding_stations
 import indianmetro.metroui.generated.resources.nearest_metro_location
 import indianmetro.metroui.generated.resources.nearest_metro_stations
 import indianmetro.metroui.generated.resources.searching_for_metro_stations
 import indianmetro.metroui.generated.resources.time_to_nearest_metro
+import org.corexero.sutradhar.utils.Platform
+import org.corexero.sutradhar.utils.platform
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
 
@@ -145,7 +148,10 @@ private fun NearestMetroRationale(
         )
 
         Text(
-            text = stringResource(Res.string.allow_access_to_your_location),
+            text = when (platform) {
+                Platform.Android -> stringResource(Res.string.allow_location_access_in_android)
+                Platform.Ios -> stringResource(Res.string.allow_location_access_in_ios)
+            },
             style = MaterialTheme.typography.bodyMedium.copy(
                 fontSize = 12.sp,
                 lineHeight = 12.sp,

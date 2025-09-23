@@ -104,29 +104,8 @@ class RouteViewModel(
     val liveLocationState: StateFlow<LiveLocationUi?> =
         providerState.combine(state) { providerState, state ->
             when (providerState) {
-                LocationProviderStatus.ProviderEnabled -> {
-                    FirebaseAnalyticsTracker.logEvent(
-                        eventName = AnalyticsEvents.LIVE_LOCATION_STARTED,
-                        screenName = ScreenName.ROUTE_SCREEN,
-                        eventParams = mapOf(
-                            AnalyticsParams.SOURCE_ID to routeScreenRoute.sourceId,
-                            AnalyticsParams.DEST_ID to routeScreenRoute.destId,
-                        )
-                    )
-                    state.routeResultUi
-                }
-
-                else -> {
-                    FirebaseAnalyticsTracker.logEvent(
-                        eventName = AnalyticsEvents.LIVE_LOCATION_STOPPED,
-                        screenName = ScreenName.ROUTE_SCREEN,
-                        eventParams = mapOf(
-                            AnalyticsParams.SOURCE_ID to routeScreenRoute.sourceId,
-                            AnalyticsParams.DEST_ID to routeScreenRoute.destId,
-                        )
-                    )
-                    null
-                }
+                LocationProviderStatus.ProviderEnabled -> state.routeResultUi
+                else -> null
             }
         }
             .flatMapLatest<RouteResultUi?, LiveLocationUi?> { routeResultUi ->
@@ -279,8 +258,7 @@ class RouteViewModel(
                 }
                 viewModelScope.launch(Dispatchers.Default) {
                     FirebaseAnalyticsTracker.logEvent(
-                        eventName = AnalyticsEvents
-                            .let { if (action.isEnabled) it.LIVE_LOCATION_ENABLED else it.LIVE_LOCATION_DISABLED },
+                        eventName = if (action.isEnabled) AnalyticsEvents.LIVE_LOCATION_ENABLED else AnalyticsEvents.LIVE_LOCATION_DISABLED,
                         screenName = ScreenName.ROUTE_SCREEN,
                         eventParams = mapOf(
                             AnalyticsParams.SOURCE_ID to routeScreenRoute.sourceId,
