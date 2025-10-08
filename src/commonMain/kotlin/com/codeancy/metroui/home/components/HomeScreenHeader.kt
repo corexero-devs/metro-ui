@@ -1,8 +1,11 @@
 package com.codeancy.metroui.home.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
@@ -16,13 +19,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import indianmetro.metroui.generated.resources.Res
+import indianmetro.metroui.generated.resources.ic_premium
 import indianmetro.metroui.generated.resources.metro
 import org.jetbrains.compose.resources.vectorResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun HomeScreenHeader(
     title: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onPremiumClicked: () -> Unit = {}
 ) {
     Row(
         modifier = modifier
@@ -49,5 +55,22 @@ fun HomeScreenHeader(
                 fontWeight = FontWeight.SemiBold
             )
         )
+        Spacer(modifier = Modifier.weight(1f))
+        Icon(
+            imageVector = vectorResource(Res.drawable.ic_premium),
+            contentDescription = null,
+            tint = Color.Yellow,
+            modifier = Modifier
+                .size(20.dp)
+                .clickable {
+                    onPremiumClicked()
+                }
+        )
     }
+}
+
+@Preview
+@Composable
+fun HomeScreenHeaderPreview() {
+    HomeScreenHeader("Metro UI")
 }
