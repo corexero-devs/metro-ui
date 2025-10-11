@@ -23,6 +23,7 @@ object AnalyticsEvents {
     const val NOT_INSIDE_METRO_ERROR = "not_inside_metro_error"
     const val LIVE_LOCATION_STARTED = "live_location_started"
     const val LIVE_LOCATION_STOPPED = "live_location_stopped"
+    const val PREMIUM = "premium"
 
 }
 

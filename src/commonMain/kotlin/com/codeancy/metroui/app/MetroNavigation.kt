@@ -44,6 +44,11 @@ fun MetroNavigation(
                         )
                     )
                 },
+                onNavigateToPremium = {
+                    navController.navigate(
+                        PayrollScreenRoute
+                    )
+                }
             )
         }
 
@@ -63,6 +68,14 @@ fun MetroNavigation(
             {
                 MapScreen()
             }
+        }
+
+        composable<PayrollScreenRoute> { it ->
+            PayrollScreenRoute.Invoke(
+                onNavigateUp = {
+                    navController.navigateUp()
+                }
+            )
         }
     }
 }

@@ -112,7 +112,15 @@ class HomeViewModel(
             is HomeScreenUiAction.OnSelectDestination -> handleDestinationStationSelect(action)
 
             is HomeScreenUiAction.OnSelectSource -> handleSourceStationSelect(action)
+            HomeScreenUiAction.OnPremiumClick -> handlePremiumClick()
         }
+    }
+
+    private fun handlePremiumClick() {
+        FirebaseAnalyticsTracker.logEvent(
+            eventName = AnalyticsEvents.PREMIUM,
+            screenName = ScreenName.HOME_SCREEN,
+        )
     }
 
     private fun initAppUpdate() {

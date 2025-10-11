@@ -14,6 +14,7 @@ import com.codeancy.metroui.route.RouteScreen
 import com.codeancy.metroui.route.RouteScreenUiAction
 import com.codeancy.metroui.route.RouteViewModel
 import com.codeancy.metroui.route.utils.RouteScreenRouteUi
+import com.corexero.dhan_tantra.sdk.presentation.PayrollScreen
 import kotlinx.serialization.Serializable
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
@@ -30,6 +31,7 @@ data class HomeScreenRoute(
             homeScreenRoute: HomeScreenRoute,
             onNavigateToRouteScreen: (Long, Long, Boolean) -> Unit,
             onNavigateToMapScreen: () -> Unit,
+            onNavigateToPremium: () -> Unit,
         ) {
             val homeViewModel: HomeViewModel = koinViewModel(
                 parameters = {
@@ -51,6 +53,7 @@ data class HomeScreenRoute(
                         )
 
                         is HomeScreenUiAction.OnMetroMapClick -> onNavigateToMapScreen()
+                        is HomeScreenUiAction.OnPremiumClick -> onNavigateToPremium()
                         else -> Unit
                     }
                 }
@@ -133,3 +136,17 @@ data class RouteScreenRoute(
 
 @Serializable
 data object MapScreenRoute
+
+
+@Serializable
+data object PayrollScreenRoute {
+    @Composable
+    fun Invoke(
+        onNavigateUp: () -> Unit,
+    ) {
+        PayrollScreen(
+            onClose = { onNavigateUp() }
+        )
+    }
+
+}

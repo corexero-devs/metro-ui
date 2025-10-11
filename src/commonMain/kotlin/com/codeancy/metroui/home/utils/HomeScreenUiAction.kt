@@ -74,4 +74,6 @@ sealed interface HomeScreenUiAction {
         val appUpdateUi: AppUpdateUi
     ) : HomeScreenUiAction
 
+    data object OnPremiumClick : HomeScreenUiAction
+
 }

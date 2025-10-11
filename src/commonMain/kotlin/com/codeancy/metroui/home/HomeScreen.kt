@@ -45,7 +45,6 @@ fun HomeScreen(
     onAction: (HomeScreenUiAction) -> Unit,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
-    var showPremium by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -61,15 +60,9 @@ fun HomeScreen(
             modifier = Modifier
                 .fillMaxWidth(),
             onPremiumClicked = {
-                showPremium = true
+                onAction(HomeScreenUiAction.OnPremiumClick)
             }
         )
-
-        if (showPremium) {
-            PayrollScreen(
-                onClose = { showPremium = false }
-            )
-        }
 
         Spacer(modifier = Modifier.height(16.dp))
 
