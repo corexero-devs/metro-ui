@@ -15,4 +15,9 @@ sealed class MetroConfigKey<T>(
         key = "APP_UPDATE_INFO",
         defaultValue = ""
     )
+
+    data object EnableAds: MetroConfigKey<Boolean>(
+        key = "ENABLE_AD",
+        defaultValue = false
+    )
 }

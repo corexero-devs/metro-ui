@@ -4,8 +4,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.backhandler.BackHandler
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.codeancy.metroui.common.utils.IntentUtils
+import com.codeancy.metroui.common.utils.MetroConfig
 import com.codeancy.metroui.domain.models.LiveLocationUi
 import com.codeancy.metroui.home.HomeScreen
 import com.codeancy.metroui.home.HomeViewModel
@@ -71,6 +74,7 @@ data class RouteScreenRoute(
 ) {
     companion object {
 
+        @OptIn(ExperimentalComposeUiApi::class)
         @Composable
         fun Invoke(
             routeScreenRoute: RouteScreenRoute,
@@ -79,6 +83,7 @@ data class RouteScreenRoute(
         ) {
 
             val intentUtils = koinInject<IntentUtils>()
+            val adsController = MetroConfig.interstitialAdController
 
             val routeViewModel: RouteViewModel = koinViewModel<RouteViewModel>(
                 parameters = {
@@ -99,6 +104,14 @@ data class RouteScreenRoute(
 
                     else -> Unit
                 }
+            }
+
+            LaunchedEffect(Unit){
+                adsController?.preload()
+            }
+
+            BackHandler{
+                onNavigateUp()
             }
 
             RouteScreen(

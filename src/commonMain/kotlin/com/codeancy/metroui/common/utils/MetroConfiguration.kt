@@ -2,6 +2,7 @@ package com.codeancy.metroui.common.utils
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.compositionLocalOf
+import com.codeancy.metroui.ads.InterstitialAdController
 
 expect class MapDrawableResource
 
@@ -10,7 +11,8 @@ data class MetroConfiguration(
     val allowLocationButtonText: String,
     val mapDrawableResource: MapDrawableResource,
     val appName: String,
-    val appVersion: String
+    val appVersion: String,
+    val interstitialAdController: InterstitialAdController?
 )
 
 val LocalMetroConfiguration =

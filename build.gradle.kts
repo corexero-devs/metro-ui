@@ -87,6 +87,8 @@ kotlin {
 
                 implementation(projects.dhanTantra)
 
+                implementation(libs.compose.backhandler)
+
             }
         }
 

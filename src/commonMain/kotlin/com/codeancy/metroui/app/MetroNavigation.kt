@@ -11,6 +11,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
+import com.codeancy.metroui.common.utils.MetroConfig
 import com.codeancy.metroui.map.MapScreen
 import com.codeancy.metroui.map.MetroTopAppBar
 
@@ -53,10 +54,17 @@ fun MetroNavigation(
         }
 
         composable<RouteScreenRoute> { it ->
+            val adsController = MetroConfig.interstitialAdController
             RouteScreenRoute.Invoke(
                 showInAppReview = showInAppReview,
                 onNavigateUp = {
-                    navController.navigateUp()
+                    if(adsController!=null){
+                        adsController.show {
+                            navController.navigateUp()
+                        }
+                    }else{
+                        navController.navigateUp()
+                    }
                 },
                 routeScreenRoute = it.toRoute()
             )
