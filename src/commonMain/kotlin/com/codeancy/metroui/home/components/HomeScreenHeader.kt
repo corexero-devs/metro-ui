@@ -12,18 +12,13 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.corexero.dhan_tantra.sdk.RevenueCatManager
+import com.codeancy.metroui.common.utils.MetroConfig
 import indianmetro.metroui.generated.resources.Res
 import indianmetro.metroui.generated.resources.ic_premium
 import indianmetro.metroui.generated.resources.metro
@@ -36,8 +31,6 @@ fun HomeScreenHeader(
     modifier: Modifier = Modifier,
     onPremiumClicked: () -> Unit = {}
 ) {
-
-    var showPurchaseIcon by rememberSaveable{ mutableStateOf(true) }
     Row(
         modifier = modifier
             .background(MaterialTheme.colorScheme.primary)
@@ -65,13 +58,7 @@ fun HomeScreenHeader(
         )
         Spacer(modifier = Modifier.weight(1f))
 
-        LaunchedEffect(Unit){
-            RevenueCatManager.getSubscriptionStatus {
-                showPurchaseIcon = false
-            }
-        }
-
-        if(showPurchaseIcon) {
+        if (!MetroConfig.isPremiumUser) {
             Icon(
                 imageVector = vectorResource(Res.drawable.ic_premium),
                 contentDescription = null,

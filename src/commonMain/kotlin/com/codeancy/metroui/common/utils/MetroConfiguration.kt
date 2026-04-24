@@ -12,7 +12,8 @@ data class MetroConfiguration(
     val mapDrawableResource: MapDrawableResource,
     val appName: String,
     val appVersion: String,
-    val interstitialAdController: InterstitialAdController?
+    val interstitialAdController: InterstitialAdController?,
+    val isPremiumUser: Boolean
 )
 
 val LocalMetroConfiguration =
