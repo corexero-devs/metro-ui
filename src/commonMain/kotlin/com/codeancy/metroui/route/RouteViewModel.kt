@@ -40,6 +40,11 @@ import org.corexero.sutradhar.remoteConfig.FirebaseRemoteConfig
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
+private data object RouteLiveLocationConfigKey : org.corexero.sutradhar.remoteConfig.ConfigKey<Boolean>(
+    key = "LIVE_LOCATION",
+    defaultValue = false
+)
+
 @Stable
 data class RoutScreenState(
     val showProgress: Boolean = true,
@@ -87,9 +92,15 @@ class RouteViewModel(
     @OptIn(ExperimentalCoroutinesApi::class)
     val providerState: StateFlow<LocationProviderStatus?> =
         state
-            .map { if (it.isLiveLocationEnabled && it.isInterChangeFormatOpen) it.routeResultUi else null }
+            .map {
+                if (isLiveLocationFeatureEnabled() && it.isLiveLocationEnabled && it.isInterChangeFormatOpen) {
+                    it.routeResultUi
+                } else {
+                    null
+                }
+            }
             .flatMapLatest<RouteResultUi?, LocationProviderStatus?> { routeResultUi ->
-                routeResultUi?.let { routeResultUi ->
+                routeResultUi?.let {
                     locationRepository.getLocationAccess()
                 } ?: flow { emit(null) }
             }
@@ -97,14 +108,21 @@ class RouteViewModel(
             .stateIn(
                 viewModelScope,
                 SharingStarted.WhileSubscribed(5000),
-                LocationProviderStatus.NoProviderEnabled
+                null
             )
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val liveLocationState: StateFlow<LiveLocationUi?> =
         providerState.combine(state) { providerState, state ->
             when (providerState) {
-                LocationProviderStatus.ProviderEnabled -> state.routeResultUi
+                LocationProviderStatus.ProviderEnabled -> {
+                    if (isLiveLocationFeatureEnabled() && state.isLiveLocationEnabled && state.isInterChangeFormatOpen) {
+                        state.routeResultUi
+                    } else {
+                        null
+                    }
+                }
+
                 else -> null
             }
         }
@@ -115,17 +133,20 @@ class RouteViewModel(
                         .map { liveLocation ->
                             liveLocation.toLiveLocationUi()
                         }
+                        .onStart {
+                            emit(LiveLocationUi.Initializing)
+                        }
                 } ?: flow { emit(null) }
             }
             .flowOn(Dispatchers.Default)
-            .onStart {
-                emit(LiveLocationUi.Initializing)
-            }
             .stateIn(
                 viewModelScope,
                 SharingStarted.WhileSubscribed(5000),
-                LiveLocationUi.Initializing
+                null
             )
+
+    private fun isLiveLocationFeatureEnabled(): Boolean =
+        FirebaseRemoteConfig.getBoolean(RouteLiveLocationConfigKey)
 
     private fun showNotInsideMetroError() {
         _state.update { currentState ->
@@ -293,6 +314,12 @@ class RouteViewModel(
             }
 
             is RouteScreenUiAction.ToggleLiveLocation -> {
+                if (!isLiveLocationFeatureEnabled()) {
+                    _state.update {
+                        it.copy(isLiveLocationEnabled = false)
+                    }
+                    return
+                }
                 _state.update {
                     it.copy(
                         isLiveLocationEnabled = action.isEnabled
