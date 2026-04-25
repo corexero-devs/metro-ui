@@ -70,6 +70,7 @@ fun RouteScreen(
             onBack = onBack,
             onShare = {
                 scope.launch {
+                    onAction(RouteScreenUiAction.ShareScreenShot)
                     val imageBitmap = graphicsLayer.toImageBitmap()
                     onShare(imageBitmap)
                 }

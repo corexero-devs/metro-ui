@@ -183,12 +183,13 @@ class RouteViewModel(
             FirebaseAnalyticsTracker.logEvent(
                 eventName = AnalyticsEvents.ROUTE_LOAD_TIME,
                 screenName = ScreenName.ROUTE_SCREEN,
-                eventParams = mapOf(
-                    AnalyticsParams.SOURCE_ID to routeScreenRoute.sourceId,
-
-                    AnalyticsParams.DEST_ID to routeScreenRoute.destId,
-                    AnalyticsParams.TIME to (Clock.System.now() - startTime) / 1000
-                )
+                eventParams = routeAnalyticsParams(
+                    viewType = if (_state.value.isInterChangeFormatOpen) {
+                        ROUTE_VIEW_INTERCHANGE
+                    } else {
+                        ROUTE_VIEW_STATION_LIST
+                    }
+                ) + mapOf(AnalyticsParams.TIME to (Clock.System.now() - startTime) / 1000)
             )
 
             //If app review is not show, show the app review
@@ -231,6 +232,40 @@ class RouteViewModel(
         }
     }
 
+    private fun routeAnalyticsParams(
+        viewType: String? = null,
+    ): Map<String, Any> {
+        val routeResult = _state.value.routeResultUi
+        return mutableMapOf<String, Any>(
+            AnalyticsParams.SOURCE_ID to routeScreenRoute.sourceId,
+            AnalyticsParams.DEST_ID to routeScreenRoute.destId,
+        ).apply {
+            routeResult?.let {
+                put(AnalyticsParams.SOURCE_NAME, it.sourceStation.name.value)
+                put(AnalyticsParams.DEST_NAME, it.destinationStation.name.value)
+                put(AnalyticsParams.STATIONS, it.stations)
+                put(AnalyticsParams.INTERCHANGES, it.interchanges)
+                put(AnalyticsParams.FARE, it.fare)
+            }
+            viewType?.let {
+                put(AnalyticsParams.VIEW_TYPE, it)
+            }
+        }
+    }
+
+    private fun logRouteEvent(
+        eventName: String,
+        viewType: String? = null,
+    ) {
+        viewModelScope.launch(Dispatchers.Default) {
+            FirebaseAnalyticsTracker.logEvent(
+                eventName = eventName,
+                screenName = ScreenName.ROUTE_SCREEN,
+                eventParams = routeAnalyticsParams(viewType)
+            )
+        }
+    }
+
     fun onAction(action: RouteScreenUiAction) {
         when (action) {
 
@@ -239,7 +274,14 @@ class RouteViewModel(
             }
 
             RouteScreenUiAction.ShareScreenShot -> {
-
+                logRouteEvent(
+                    eventName = AnalyticsEvents.ROUTE_SHARE_CLICKED,
+                    viewType = if (_state.value.isInterChangeFormatOpen) {
+                        ROUTE_VIEW_INTERCHANGE
+                    } else {
+                        ROUTE_VIEW_STATION_LIST
+                    }
+                )
             }
 
             RouteScreenUiAction.GoBack -> {
@@ -260,9 +302,12 @@ class RouteViewModel(
                     FirebaseAnalyticsTracker.logEvent(
                         eventName = if (action.isEnabled) AnalyticsEvents.LIVE_LOCATION_ENABLED else AnalyticsEvents.LIVE_LOCATION_DISABLED,
                         screenName = ScreenName.ROUTE_SCREEN,
-                        eventParams = mapOf(
-                            AnalyticsParams.SOURCE_ID to routeScreenRoute.sourceId,
-                            AnalyticsParams.DEST_ID to routeScreenRoute.destId,
+                        eventParams = routeAnalyticsParams(
+                            viewType = if (_state.value.isInterChangeFormatOpen) {
+                                ROUTE_VIEW_INTERCHANGE
+                            } else {
+                                ROUTE_VIEW_STATION_LIST
+                            }
                         )
                     )
                 }
@@ -280,9 +325,12 @@ class RouteViewModel(
                     FirebaseAnalyticsTracker.logEvent(
                         eventName = AnalyticsEvents.NOT_INSIDE_METRO_ERROR,
                         screenName = ScreenName.ROUTE_SCREEN,
-                        eventParams = mapOf(
-                            AnalyticsParams.SOURCE_ID to routeScreenRoute.sourceId,
-                            AnalyticsParams.DEST_ID to routeScreenRoute.destId,
+                        eventParams = routeAnalyticsParams(
+                            viewType = if (_state.value.isInterChangeFormatOpen) {
+                                ROUTE_VIEW_INTERCHANGE
+                            } else {
+                                ROUTE_VIEW_STATION_LIST
+                            }
                         )
                     )
                 }
@@ -290,11 +338,25 @@ class RouteViewModel(
             }
 
             RouteScreenUiAction.ToggleInterChangeFormat -> {
+                val nextIsInterchangeView = !_state.value.isInterChangeFormatOpen
                 _state.update { currentState ->
                     currentState.copy(
-                        isInterChangeFormatOpen = !currentState.isInterChangeFormatOpen
+                        isInterChangeFormatOpen = nextIsInterchangeView
                     )
                 }
+                val viewType = if (nextIsInterchangeView) {
+                    ROUTE_VIEW_INTERCHANGE
+                } else {
+                    ROUTE_VIEW_STATION_LIST
+                }
+                logRouteEvent(
+                    eventName = if (nextIsInterchangeView) {
+                        AnalyticsEvents.ROUTE_VIEW_INTERCHANGE
+                    } else {
+                        AnalyticsEvents.ROUTE_VIEW_STATION_LIST
+                    },
+                    viewType = viewType
+                )
             }
         }
     }
@@ -302,5 +364,7 @@ class RouteViewModel(
     companion object {
         private const val NOT_INSIDE_METRO_ERROR =
             "Live location starts only when you’re inside the metro"
+        private const val ROUTE_VIEW_INTERCHANGE = "interchange"
+        private const val ROUTE_VIEW_STATION_LIST = "station_list"
     }
 }
