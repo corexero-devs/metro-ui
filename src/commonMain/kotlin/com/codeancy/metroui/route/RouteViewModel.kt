@@ -50,6 +50,7 @@ data class RoutScreenState(
     val showProgress: Boolean = true,
     val routeResultUi: RouteResultUi? = null,
     val showInAppReview: Boolean = false,
+    val showBookTicketTooltip: Boolean = false,
     val hasInitialized: Boolean = false,
     val isLiveLocationEnabled: Boolean = false,
     val showError: Boolean = false,
@@ -212,6 +213,12 @@ class RouteViewModel(
                     }
                 ) + mapOf(AnalyticsParams.TIME to (Clock.System.now() - startTime) / 1000)
             )
+
+            val tooltipCount = dataStoreManager.getFirst(DataStoreKey.BookTicketTooltipShowCount)
+            if (tooltipCount < 3) {
+                _state.update { it.copy(showBookTicketTooltip = true) }
+                dataStoreManager.put(DataStoreKey.BookTicketTooltipShowCount, tooltipCount + 1)
+            }
 
             //If app review is not show, show the app review
             if (FirebaseRemoteConfig.getBoolean(MetroConfigKey.EnableInAppReview) &&
