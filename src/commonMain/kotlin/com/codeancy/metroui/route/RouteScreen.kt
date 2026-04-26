@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -26,7 +27,6 @@ import androidx.compose.ui.graphics.layer.drawLayer
 import androidx.compose.ui.graphics.rememberGraphicsLayer
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
-import com.codeancy.metroui.common.components.ProgressDialog
 import com.codeancy.metroui.common.components.SnackBar
 import com.codeancy.metroui.common.utils.MetroUiColor
 import com.codeancy.metroui.domain.models.LiveLocationUi
@@ -91,11 +91,6 @@ fun RouteScreen(
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-            )
-
-            ProgressDialog(
-                isLoading = state.showProgress,
-                onDismissRequest = { onAction(RouteScreenUiAction.GoBack) }
             )
 
             val routeResultUi = state.routeResultUi ?: return@Column
@@ -216,6 +211,19 @@ fun RouteScreen(
             }
 
 
+        }
+
+        if (state.showProgress) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MetroUiColor.background),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator(
+                    color = MaterialTheme.colorScheme.primary
+                )
+            }
         }
 
         FloatingActionButton(
