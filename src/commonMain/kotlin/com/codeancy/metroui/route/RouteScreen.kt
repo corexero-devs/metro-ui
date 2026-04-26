@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -93,7 +92,15 @@ fun RouteScreen(
                     .fillMaxWidth()
             )
 
-            val routeResultUi = state.routeResultUi ?: return@Column
+            val routeResultUi = state.routeResultUi ?: run {
+                RouteScreenShimmer(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 12.dp)
+                        .verticalScroll(rememberScrollState())
+                )
+                return@Column
+            }
 
             MetroRouteSubInfo(
                 time = routeResultUi.interchange.last().let {
@@ -211,19 +218,6 @@ fun RouteScreen(
             }
 
 
-        }
-
-        if (state.showProgress) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(MetroUiColor.background),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator(
-                    color = MaterialTheme.colorScheme.primary
-                )
-            }
         }
 
         FloatingActionButton(
